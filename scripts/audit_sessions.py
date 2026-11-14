@@ -29,7 +29,7 @@ UNIT_INTERVAL = ["BounceRates", "ExitRates", "SpecialDay"]
 def audit(df: pd.DataFrame, sha256: str) -> tuple[dict, pd.DataFrame]:
     missing_columns = sorted(set(EXPECTED_COLUMNS) - set(df.columns))
     extra_columns = sorted(set(df.columns) - set(EXPECTED_COLUMNS))
-    if missing_columns or extra_columns:   
+    if missing_columns or extra_columns:
      raise ValueError(
             f"Unexpected source schema. Missing={missing_columns}; Extra={extra_columns}"
         )
