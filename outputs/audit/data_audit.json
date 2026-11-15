@@ -1,0 +1,50 @@
+{
+  "source_file": "online_shoppers_intention.csv",
+  "sha256": "B3055EE355F59134D851D32641183CB4A8B45DEF7124D2F50442A042F358E0D9",
+  "sessions": 12330,
+  "columns": 18,
+  "missing_cells": 0,
+  "purchase_sessions": 1908,
+  "nonpurchase_sessions": 10422,
+  "conversion_rate_pct": 15.4745,
+  "exact_duplicate_rows": 125,
+  "duplicate_purchase_rows": 0,
+  "duplicate_nonpurchase_rows": 125,
+  "deduplicated_sessions": 12205,
+  "deduplicated_conversion_pct": 15.6329,
+  "pagevalues_zero_sessions": 9600,
+  "pagevalues_zero_pct": 77.86,
+  "months_observed": [
+    "Aug",
+    "Dec",
+    "Feb",
+    "Jul",
+    "June",
+    "Mar",
+    "May",
+    "Nov",
+    "Oct",
+    "Sep"
+  ],
+  "visitor_type_counts": {
+    "Returning_Visitor": 10551,
+    "New_Visitor": 1694,
+    "Other": 85
+  },
+  "negative_value_counts": {
+    "Administrative": 0,
+    "Administrative_Duration": 0,
+    "Informational": 0,
+    "Informational_Duration": 0,
+    "ProductRelated": 0,
+    "ProductRelated_Duration": 0,
+    "PageValues": 0
+  },
+  "outside_0_1_counts": {
+    "BounceRates": 0,
+    "ExitRates": 0,
+    "SpecialDay": 0
+  },
+  "unparseable_numeric_cells": 0,
+  "duplicate_sensitivity_pp": 0.1584
+}

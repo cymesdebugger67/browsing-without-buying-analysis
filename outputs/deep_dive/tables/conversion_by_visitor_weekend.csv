@@ -1,0 +1,7 @@
+VisitorType,weekend_label,sessions,purchases,nonpurchase_sessions,conversion_rate_pct,interpret_with_caution
+New_Visitor,Weekday,1215,317,898,26.09,False
+New_Visitor,Weekend,479,105,374,21.92,False
+Other,Weekday,78,15,63,19.23,True
+Other,Weekend,7,1,6,14.29,True
+Returning_Visitor,Weekday,8169,1077,7092,13.18,False
+Returning_Visitor,Weekend,2382,393,1989,16.5,False

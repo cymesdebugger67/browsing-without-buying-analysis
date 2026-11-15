@@ -1,6 +1,6 @@
 # Statistical methods — Browsing Without Buying
 
-This phase compares **recorded shopping sessions**, not unique people. The source is the UCI Online Shoppers Purchasing Intention Dataset (Sakar & Kastro, 2018; CC BY 4.0). All rows remain in the primary sample; the 125 later exact matches are documented separately in the data audit.
+This phase compares **recorded shopping sessions**. UCI describes a one-session-per-user sampling design, but the released data has no identifiers to independently verify this claim. The source is the UCI Online Shoppers Purchasing Intention Dataset (Sakar & Kastro, 2018; CC BY 4.0). All rows remain in the primary sample; the 125 later exact matches are documented separately in the data audit.
 
 ## Planned comparisons
 

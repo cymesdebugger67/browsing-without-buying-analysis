@@ -1,0 +1,5 @@
+variable,purchasing_sessions,nonpurchasing_sessions,median_purchasing,median_nonpurchasing,mann_whitney_u,p_value,rank_biserial_purchasing_vs_nonpurchasing,p_value_bh_8tests
+ProductRelated,1908,10422,29,16,13093049,1.052438577e-107,0.316865287,2.806502873e-107
+ProductRelated_Duration,1908,10422,1109.90625,510.19,13382713,5.332268364e-128,0.3459989492,2.132907346e-127
+BounceRates,1908,10422,0,0.004255319,7686683,1.832770059e-61,-0.2268931389,2.443693412e-61
+ExitRates,1908,10422,0.016,0.028571429,5903869,1.156824197e-175,-0.4062039984,9.254593577e-175

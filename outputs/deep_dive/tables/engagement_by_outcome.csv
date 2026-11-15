@@ -1,0 +1,9 @@
+outcome,metric,sessions,mean,p25,median,p75
+Non-purchasing,ProductRelated,10422,28.7146,6.0,16.0,35.0
+Non-purchasing,ProductRelated_Duration,10422,1069.9878,151.0,510.19,1331.8167
+Non-purchasing,BounceRates,10422,0.0253,0.0,0.0043,0.02
+Non-purchasing,ExitRates,10422,0.0474,0.0156,0.0286,0.0538
+Purchasing,ProductRelated,1908,48.2102,15.0,29.0,57.0
+Purchasing,ProductRelated_Duration,1908,1876.2096,541.9063,1109.9062,2266.0113
+Purchasing,BounceRates,1908,0.0051,0.0,0.0,0.0065
+Purchasing,ExitRates,1908,0.0196,0.0095,0.016,0.025

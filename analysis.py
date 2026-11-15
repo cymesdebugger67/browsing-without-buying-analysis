@@ -1,5 +1,3 @@
-# %% Imports and paths
-"""Descriptive online shopping conversion analysis. Run: python analysis.py"""
 from pathlib import Path
 import pandas as pd
 import matplotlib

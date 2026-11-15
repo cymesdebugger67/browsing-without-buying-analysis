@@ -1,0 +1,5 @@
+variable,sessions,categories,chi_square,degrees_of_freedom,p_value,cramers_v,min_expected_cell,expected_cells_below_5,chi_square_expected_count_check,p_value_bh_8tests
+VisitorType,12330,3,135.2519228,2,4.269904152e-30,0.1047346018,13.15328467,0,PASS,4.87989046e-30
+weekend_label,12330,2,10.58183515,1,0.001142042364,0.02929536797,443.8072993,0,PASS,0.001142042364
+page_depth,12330,4,426.6445294,3,3.743734992e-92,0.1860165359,5.880291971,0,PASS,7.487469985e-92
+bounce_band,12330,4,363.5971359,3,1.695606038e-78,0.1717230876,203.6437956,0,PASS,2.712969661e-78

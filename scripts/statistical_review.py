@@ -1,4 +1,3 @@
-"""Statistical comparisons of recorded shopping sessions, without causal claims."""
 
 from __future__ import annotations
 
@@ -162,8 +161,8 @@ def run(source: Path = SOURCE, output: Path = OUTPUT) -> dict:
         "", "## Interpret with care", "",
         "- Chi-square expected-cell checks are in `categorical_tests.csv`; comparisons marked CAUTION are not strong grounds for asymptotic inference.",
         "- P-values alone do not describe practical significance; review Cramér's V, rank-biserial effect sizes, group counts, and distributions.",
-        "- Sessions are not guaranteed to represent independent people; customer identities and repeated-visit links are unavailable.",
-        "- The bootstrap assumes recorded sessions behave as independent observations within visitor groups; it does not correct unknown repeat-visitor clustering.",
+        "- UCI describes one session per user, but the released CSV has no user identifiers to independently verify this design.",
+        "- The bootstrap assumes independent session observations within visitor groups; that assumption is not independently testable from the CSV.",
         "- Page-depth and bounce-rate groups reflect observed session behavior, not treatments or causal purchase drivers.",
         "- The dataset is observational and does not establish causation, customer-level behavior, or complete annual seasonality.",
         "- All original sessions, including 125 later exact-match rows, are retained; the duplicate sensitivity result belongs to the separate data audit.",

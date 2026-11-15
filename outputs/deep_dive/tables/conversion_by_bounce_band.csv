@@ -1,0 +1,5 @@
+bounce_band,sessions,purchases,nonpurchase_sessions,conversion_rate_pct,interpret_with_caution
+Zero,5518,1036,4482,18.77,False
+"(0, 0.02]",4115,765,3350,18.59,False
+"(0.02, 0.05]",1381,90,1291,6.52,False
+Above 0.05,1316,17,1299,1.29,False

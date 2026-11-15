@@ -1,5 +1,3 @@
-"""Session conversion comparisons beyond the starter analysis."""
-
 from __future__ import annotations
 
 from pathlib import Path

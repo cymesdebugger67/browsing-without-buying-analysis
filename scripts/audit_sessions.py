@@ -30,7 +30,7 @@ def audit(df: pd.DataFrame, sha256: str) -> tuple[dict, pd.DataFrame]:
     missing_columns = sorted(set(EXPECTED_COLUMNS) - set(df.columns))
     extra_columns = sorted(set(df.columns) - set(EXPECTED_COLUMNS))
     if missing_columns or extra_columns:
-     raise ValueError(
+        raise ValueError(
             f"Unexpected source schema. Missing={missing_columns}; Extra={extra_columns}"
         )
 
@@ -149,7 +149,7 @@ def main() -> None:
     print(f"PASS - {metrics['sessions']:,} sessions, {metrics['columns']} columns")
     print(f"Missing cells: {metrics['missing_cells']}")
     print(f"Conversion: {metrics['conversion_rate_pct']:.3f}% ({metrics['purchase_sessions']:,} purchasing sessions)")
-    print(f"Exact duplicates: {metrics['exact_duplicate_rows']} (all but {metrics['duplicate_purchase_rows']} non-purchasing)")
+    print(f"Exact duplicate rows: {metrics['exact_duplicate_rows']} (purchasing: {metrics['duplicate_purchase_rows']}; non-purchasing: {metrics['duplicate_nonpurchase_rows']})")
     print(f"Deduplicated conversion: {metrics['deduplicated_conversion_pct']:.3f}% ({metrics['duplicate_sensitivity_pp']:+.3f} pp)")
     print(f"PageValues zeros: {metrics['pagevalues_zero_sessions']:,}")
     print(f"Range violations: {sum(metrics['negative_value_counts'].values()) + sum(metrics['outside_0_1_counts'].values())}")

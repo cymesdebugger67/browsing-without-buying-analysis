@@ -1,0 +1,2 @@
+new_sessions,new_purchases,returning_sessions,returning_purchases,new_conversion_pct,returning_conversion_pct,difference_percentage_points,bootstrap_95pct_lower_pp,bootstrap_95pct_upper_pp,bootstrap_repetitions,bootstrap_seed
+1694,422,10551,1470,24.91145218,13.93232869,10.97912349,8.805716055,13.1626317,2000,2026

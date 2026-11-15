@@ -1,0 +1,12 @@
+VisitorType,page_depth,sessions,purchases,nonpurchase_sessions,conversion_rate_pct,interpret_with_caution
+New_Visitor,0 pages,7,2,5,28.57,True
+New_Visitor,1–5 pages,321,38,283,11.84,False
+New_Visitor,6–20 pages,858,204,654,23.78,False
+New_Visitor,21+ pages,508,178,330,35.04,False
+Other,1–5 pages,43,3,40,6.98,True
+Other,6–20 pages,28,5,23,17.86,True
+Other,21+ pages,14,8,6,57.14,True
+Returning_Visitor,0 pages,31,4,27,12.9,True
+Returning_Visitor,1–5 pages,1967,55,1912,2.8,False
+Returning_Visitor,6–20 pages,3478,368,3110,10.58,False
+Returning_Visitor,21+ pages,5075,1043,4032,20.55,False
