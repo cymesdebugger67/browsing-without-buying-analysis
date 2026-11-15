@@ -1,0 +1,3 @@
+special_day_band,sessions,purchases,nonpurchase_sessions,conversion_rate_pct,wilson_95_lower_pct,wilson_95_upper_pct,sample_share_pct,small_sample_flag
+Nonzero proximity,1251,77,1174,6.155075939248601,4.952774329490703,7.625823365953169,10.145985401459853,False
+Zero proximity,11079,1831,9248,16.526762343171768,15.846770677777469,17.22995853865553,89.85401459854015,False

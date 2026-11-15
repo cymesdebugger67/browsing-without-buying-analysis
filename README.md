@@ -1,88 +1,141 @@
 # Browsing Without Buying
 
-**E-commerce conversion analytics | Descriptive analysis and statistical review**
+**E-commerce conversion analytics · statistical evidence · session-level classification**
 
-**Project owner:** Cyril James Lunzaga
+**Project author:** Cyril James Lunzaga
 
-This project examines how recorded online shopping sessions differ between sessions that end in a purchase and those that do not. It combines a documented source audit, visitor and browsing segmentation, reproducible Python analyses, exploratory statistical tests, and a concise analytical case study.
+## Executive summary
 
-> **Scope:** These are **session-level observational associations**, not identified-customer conversion behavior, confirmed cart abandonment, or causal evidence about what makes shoppers purchase.
+Why do some recorded shopping sessions end in a purchase while others do not? This project uses reproducible descriptive analysis, uncertainty estimates, statistical tests, and machine-learning comparisons to examine the recorded sessions. It distinguishes **observed relationships** from **predictive classification performance** and from interventions that the data cannot support.
 
-## At a glance
-
-| Measure | Observed result |
+| Key metric | Observed value |
 | --- | ---: |
-| Recorded sessions | 12,330 |
-| Sessions ending in purchase | 1,908 |
-| Overall session conversion | 15.47% |
-| Missing values | 0 |
-| Subsequent exact-match rows retained | 125 |
+| Recorded sessions | **12,330** |
+| Purchasing sessions | **1,908** |
+| Non-purchasing sessions | **10,422** |
+| Observed session conversion | **15.47%** |
+| Source attributes | **18** (17 inputs + Revenue) |
+| Missing cells | **0** |
+| Exact-match later rows, retained | **125** |
 
-## Research questions
+## Project objectives
 
-1. How often do recorded sessions end in a purchase?
-2. How does observed conversion vary across visitor types, browsing-depth groups, and traffic codes?
-3. How do browsing engagement and exit-related metrics differ between purchasing and non-purchasing sessions?
-4. Which exploratory associations show notable effect sizes, and what are their statistical limitations?
+1. Audit the original dataset and quantify data-quality and duplicate-record sensitivity.
+2. Compare conversion across visitor type, browsing depth, traffic sources, browser and regional categories, and other recorded session attributes.
+3. Evaluate the strength and uncertainty of exploratory associations using effect sizes, intervals, and multiple-testing control.
+4. Compare a prior-only baseline, logistic regression, and random forest using a group-isolated holdout and training-only hyperparameter selection.
+5. Turn the evidence into practical hypotheses for **future testing**, without inventing customer journeys, cart abandonment, revenue or causal effects.
 
-## Key findings
+## Dataset and analytical scope
 
-**Visitor categories differ.** New-visitor sessions converted at **24.91%** (422/1,694), compared with **13.93%** (1,470/10,551) for returning-visitor sessions. The observed difference is **+10.98 percentage points**. A fixed-seed, session-level bootstrap produced an exploratory 95% interval of **+8.81 to +13.16 percentage points**; it assumes session independence, which cannot be independently verified from the released CSV.
+- **Source:** [UCI Online Shoppers Purchasing Intention Dataset](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset), Sakar & Kastro (2018), DOI [10.24432/C5F88Q](https://doi.org/10.24432/C5F88Q); license **CC BY 4.0**.
+- **Unit:** recorded shopping session; `Revenue` is a binary indicator that the recorded session ended in a purchase.
+- **Input:** 18 CSV columns. Categorical integer codes are treated as labels, not ordinal magnitudes.
+- **Integrity:** original records are retained. Excluding later exact-match rows changes overall conversion by **+0.158 percentage points**, but matching features do not establish duplicate events.
+- **Leakage boundary:** `PageValues` is excluded from principal models and explanatory results because its definition is transaction-linked. A separate sensitivity experiment documents the difference.
+- **Data ownership:** the raw CSV stays under `data/raw/` locally and is never committed to Git.
 
-**Purchasing sessions show more product-page engagement.** Median product pages were **29** for purchasing sessions versus **16** for non-purchasing sessions. Within the 21+ product-page group, observed conversion was **35.04%** for new-visitor sessions (178/508) and **20.55%** for returning-visitor sessions (1,043/5,075). Visiting more pages should not be interpreted as causing purchases.
+## Findings from exploratory analysis
 
-**Associations vary in magnitude.** Among four tested categorical comparisons, page-depth groups had the largest Cramér's V (**0.186**). Among four numeric comparisons, `ExitRates` had the largest absolute rank-biserial effect size (**−0.406**). Eight exploratory tests were adjusted together using Benjamini–Hochberg. Small p-values are not substitutes for effect sizes, adequate subgroup counts, or a causal study design.
+**Visitor category.** Recorded New_Visitor sessions converted at **24.91%** (422/1,694), versus **13.93%** (1,470/10,551) for Returning_Visitor sessions, a **+10.98 percentage-point** descriptive difference. A 2,000-replicate session bootstrap produced an exploratory 95% interval of **+8.81 to +13.16 percentage points**.
 
-## Selected visualizations
+**Statistical associations.** The largest Cramér's V in the prespecified categorical test family was **page_depth** (**0.186**); the largest absolute numeric rank-biserial effect was **ExitRates** (**-0.406**). The original eight tests use Benjamini–Hochberg adjustment. These comparisons do not prove causes.
 
-![Observed conversion by visitor category](outputs/charts/conversion_by_visitor.png)
+**Additional segmentation.** The upgrade adds region, browser, operating-system and special-day breakdowns, Wilson intervals for categorical conversion estimates, and composition plots. Groups with fewer than 100 records remain in CSV evidence but are flagged as sparse; interval charts emphasize adequately sized groups. Codes lack published business labels and should not be translated into invented audience profiles.
 
-![Observed conversion by product-page depth](outputs/charts/conversion_by_page_depth.png)
+### Additional quantified patterns
 
-![Observed conversion across descriptive bounce-rate bands](outputs/deep_dive/charts/conversion_by_bounce_band.png)
+**Browsing depth.** Sessions with 21+ product pages had observed purchase completion of **21.96%** (1,229/5,597), versus **4.12%** (96/2,331) for 1–5 pages. This is a full-session association, not proof that increasing page views creates purchases. See the [depth table](outputs/advanced_segmentation/tables/conversion_by_product_depth.csv).
 
-Additional reviewed figures: [visitor × depth heatmap](outputs/deep_dive/charts/visitor_depth_heatmap.png), [high-volume traffic-type codes](outputs/deep_dive/charts/high_volume_traffic_codes.png), and [observed month labels](outputs/charts/conversion_by_month.png). The 0-page depth group has only **38 sessions**, and the `Other` visitor group has **85**; those bars should not be treated as stable estimates. Month-group sample sizes vary, traffic codes have no inherent numeric ranking, and month labels do not form a complete annual time series.
+**Weekend label.** Weekend sessions converted at **17.40%** (499/2,868) versus **14.89%** (1,409/9,462) on weekdays. This comparison is unadjusted for traffic mix and month; it is not a causal weekend effect. See the [weekend table](outputs/advanced_segmentation/tables/conversion_by_weekend.csv).
 
-## Evidence and analytical decisions
+**SpecialDay indicator.** Sessions with nonzero SpecialDay proximity converted at **6.16%** (77/1,251) versus **16.53%** (1,831/11,079) for zero proximity. SpecialDay is a source-defined proximity feature, not a verified calendar event or promotion indicator. See the [SpecialDay table](outputs/advanced_segmentation/tables/conversion_by_special_day.csv).
 
-The original 12,330 source rows are retained. **125 subsequent exact-match rows** were identified, but matching measured fields do not prove repeated data capture or duplicate sessions. Removing those rows as a sensitivity analysis changes overall conversion by **+0.158 percentage points**; deduplication is not applied to primary estimates.
+### Session composition and conversion
 
-`PageValues` is excluded from explanatory comparisons because its definition is linked to transaction-related value. Small subgroups (fewer than 100 sessions) are flagged. Bins for browsing depth and bounce rate are descriptive choices, not validated risk thresholds. Chi-square expected-cell diagnostics, adjusted p-values, nonparametric effect sizes, and the exploratory visitor-gap interval are documented in the statistical outputs.
+![Purchase and non-purchase session share](outputs/advanced_segmentation/charts/purchase_share_donut.png)
 
-Read the full [analytical case study](outputs/portfolio_case_study.md), [data audit](outputs/audit/data_audit.md), [segmentation findings](outputs/deep_dive/summary.md), and [statistical review](outputs/statistical_review/statistical_summary.md). Additional methods are documented in [conversion methodology](docs/conversion_methodology.md) and [statistical methods](docs/statistical_methods.md).
+![Visitor-category composition](outputs/advanced_segmentation/charts/visitor_mix_donut.png)
 
-## Reproduce the analysis
+![Product-page depth composition](outputs/advanced_segmentation/charts/page_depth_donut.png)
 
-1. Download the **UCI Online Shoppers Purchasing Intention Dataset** from the [official UCI repository](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset).
-2. Place its CSV at `data/raw/online_shoppers_intention.csv`. The raw dataset is intentionally **not committed** to this repository.
-3. Open this repository's root directory in VS Code or a terminal. Set up and install the Python dependencies:
+![Purchase rate by visitor category](outputs/charts/conversion_by_visitor.png)
 
-   ```powershell
-   py -m venv .venv
-   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-   ```
+![Purchase rate by browsing depth](outputs/charts/conversion_by_page_depth.png)
 
-4. Execute the analysis scripts **from the repository root**, in order:
+![Purchase conversion across regions with Wilson intervals](outputs/advanced_segmentation/charts/region_intervals.png)
 
-   ```powershell
-   .\.venv\Scripts\python.exe scripts/audit_sessions.py
-   .\.venv\Scripts\python.exe analysis.py
-   .\.venv\Scripts\python.exe scripts/conversion_deep_dive.py
-   .\.venv\Scripts\python.exe scripts/statistical_review.py
-   .\.venv\Scripts\python.exe scripts/build_portfolio_report.py
-   .\.venv\Scripts\python.exe -m pytest -q --basetemp=.venv/pytest-tmp
-   ```
+![Browsing-depth distribution by outcome](outputs/advanced_segmentation/charts/product_pages_by_outcome.png)
 
-5. Inspect outputs in `outputs/`. The three notebooks in `notebooks/` provide a complementary, readable walkthrough; select the `.venv` Python kernel and execute them with the working directory set to the repository root.
+For the full collection, see [visitor–depth heatmap](outputs/deep_dive/charts/visitor_depth_heatmap.png), [bounce-rate bands](outputs/deep_dive/charts/conversion_by_bounce_band.png), [traffic-type chart](outputs/deep_dive/charts/high_volume_traffic_codes.png), [month comparison](outputs/charts/conversion_by_month.png), and [browser intervals](outputs/advanced_segmentation/charts/browser_intervals.png).
 
-The test command specifies a project-local temporary directory to avoid an observed Windows permission issue with the default system temporary folder. The original audit records the source SHA-256 for verification. On macOS/Linux, use the matching `.venv/bin/python` executable instead.
+## Predictive algorithms and tuning
 
-## Limits and responsible interpretation
+The model selected using **training-only cross-validation** was **Random forest** (mean CV average precision **0.389**). On the **2,466-session held-out group split**, average precision was **0.361**, compared with **0.155** for the prior-only baseline; ROC-AUC was **0.771**. This is retrospective session classification, not a deployed or time-forward validated forecasting system.
 
-- UCI states that the dataset was assembled with **one session per user** during its sampled period. However, the released CSV provides no user identifiers to independently verify this design; results are reported at session level.
-- The data has no cart-event history or identified customer trajectories, so **cart abandonment** cannot be directly measured.
-- Observed engagement, bounce, exit, visitor, and traffic differences are **associations**, not causal purchase drivers.
-- Month labels do not support year-over-year conclusions or a complete seasonal analysis.
-- The data does not provide a defensible basis for individualized targeting, estimated revenue impact, or experimental effectiveness claims.
+| Model | Test average precision | ROC-AUC | Precision @0.50 | Recall @0.50 | Brier |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Majority-prior baseline | 0.155 | 0.500 | 0.000 | 0.000 | 0.131 |
+| Logistic regression | 0.323 | 0.741 | 0.636 | 0.037 | 0.119 |
+| Random forest | 0.361 | 0.771 | 0.594 | 0.050 | 0.115 |
 
-**Dataset source and attribution:** Sakar and Kastro (2018), *Online Shoppers Purchasing Intention Dataset*, UCI Machine Learning Repository. Dataset terms are identified as **CC BY 4.0** in the source audit; data are not redistributed here. For the definitive source description, access the [UCI dataset page](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset).
+At the fixed **0.50** decision threshold, the CV-selected model's held-out recall is **5.0%**. This is a crucial operational limitation: good ranking performance need not translate into strong recall at a default cutoff. A separate decision threshold of **0.225**, selected by training-only out-of-fold F1 (not test performance), yields held-out precision **0.332**, recall **0.592**, and F1 **0.425**. These policies are compared in the [threshold evaluation table](outputs/modeling/tables/threshold_sensitivity.csv). Threshold tuning changes the precision–recall trade-off, not the underlying ranking quality or deployment readiness. **Average precision**, supported by ROC-AUC, confusion matrices and Brier score, is emphasized because only about 15.5% of sessions are purchases.
+
+**Model design:** nominal category one-hot encoding and numeric standardization in a scikit-learn pipeline; exact matching input profiles assigned to the same partition; approximately one fifth held out via five-fold stratified group splitting; three-fold group-aware cross-validation on the training portion; a small, documented hyperparameter grid for logistic regression and random forest. The model family is selected using **training CV scores**, not held-out metrics. The selected model's held-out average precision has a 400-replicate, class-stratified bootstrap interval of **0.320–0.401**, conditional on session-level independence.
+
+![Precision–recall comparison on the holdout](outputs/modeling/charts/precision_recall.png)
+
+![ROC comparison](outputs/modeling/charts/roc_curves.png)
+
+![Selected classifier confusion matrix, fixed 0.50](outputs/modeling/charts/confusion_matrix.png)
+
+![Selected classifier confusion matrix, training-selected threshold](outputs/modeling/charts/confusion_matrix_cv_threshold.png)
+
+![Held-out calibration](outputs/modeling/charts/calibration.png)
+
+![Permutation-based feature importance](outputs/modeling/charts/permutation_importance.png)
+
+Read the [model evaluation](outputs/modeling/model_report.md), [model comparison table](outputs/modeling/tables/model_comparison.csv), [training CV tuning table](outputs/modeling/tables/cross_validation_tuning.csv), [permutation importance](outputs/modeling/tables/permutation_importance.csv), and [transaction-linked PageValues sensitivity](outputs/modeling/tables/pagevalues_sensitivity.csv).
+
+## Execution and technical processing
+
+The pipeline reads the original source CSV, validates its shape and labels, retains all source records, generates descriptive summaries, computes statistical evidence, creates advanced segmentation figures, trains and evaluates classifiers, then builds the README and consolidated case-study report **using the actual numerical outputs**.
+
+```text
+source CSV (local, ignored by Git)
+    → audit + original descriptive analysis + statistical evidence
+    → advanced categorical segmentation + uncertainty plots
+    → group-isolated train/test modeling + train-only CV tuning
+    → analytical reports + README + reproducibility verification
+```
+
+**Run on Windows PowerShell** from the repository root:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m scripts.run_upgrade --verify
+```
+
+The last command reruns the existing and upgraded pipeline, validates and executes five notebooks, runs the automated test suite, and checks that reports and figures were produced. The notebook executor does not save execution outputs back into the tracked notebooks. For Linux/macOS, use the matching virtual-environment Python interpreter. For manual execution, inspect [the reproducibility and modeling guide](docs/advanced_methodology.md).
+
+**Notebooks:** [01 Source quality](notebooks/01_data_audit.ipynb) · [02 Browsing patterns](notebooks/02_browsing_patterns.ipynb) · [03 Statistical evidence](notebooks/03_statistical_evidence.ipynb) · [04 Segment uncertainty](notebooks/04_advanced_segmentation.ipynb) · [05 Modeling assessment](notebooks/05_predictive_modeling.ipynb).
+
+## Implications, limitations and conclusion
+
+- Segments with reproducible descriptive differences can motivate **A/B-test hypotheses**, usability reviews, or more precise event-data collection. No intervention has been tested here.
+- Model evaluation is **retrospective full-session discrimination**. Product-page totals and durations reflect behavior observed across the session, so this is **not** a proven pre-session or real-time purchase predictor.
+- User identities, raw event sequences, cart events, exact timestamps, transaction amounts, and an external validation site are absent; customer retention, cart abandonment, revenue loss and causal ROI cannot be estimated.
+- The source's one-session-per-user design is reported by UCI but cannot be independently confirmed from the supplied CSV. Random group splitting prevents identical measured input profiles crossing the holdout, not unobserved customer or temporal dependence.
+- Month labels are incomplete as a calendar series, and small categorical groups can show unstable estimates. No customer-targeting policy should be built from these observational segments.
+
+**Conclusion:** The dataset supports a rigorous description of purchase-completion patterns and a reproducible internal classification benchmark. Its limitations prevent confident intervention or real-world deployment claims. Stronger next-stage evidence would require timestamped events, identified consented cohorts, a defined decision point, forward-time validation, and randomized experiments.
+
+## Evidence, methods and credits
+
+- [Full advanced case study](outputs/advanced_case_study.md)
+- [Original case study](outputs/portfolio_case_study.md)
+- [Data audit](outputs/audit/data_audit.md) · [Original statistical review](outputs/statistical_review/statistical_summary.md) · [Segmentation summary](outputs/advanced_segmentation/summary.md)
+- [Original conversion methodology](docs/conversion_methodology.md) · [Statistical methods](docs/statistical_methods.md) · [Modeling and reproducibility](docs/advanced_methodology.md)
+- **Author:** Cyril James Lunzaga
+- **Dataset:** Sakar, C. & Kastro, Y. (2018), [UCI Online Shoppers Purchasing Intention Dataset](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset), CC BY 4.0. Code and analytical interpretation are independent of the dataset authors.

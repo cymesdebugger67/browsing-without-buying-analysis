@@ -1,0 +1,108 @@
+{
+  "source_sessions": 12330,
+  "source_purchases": 1908,
+  "training_sessions": 9864,
+  "test_sessions": 2466,
+  "training_purchases": 1526,
+  "test_purchases": 382,
+  "group_overlap": 0,
+  "chosen_model": "Random forest",
+  "selected_cv_average_precision": 0.38889834815206425,
+  "train_cv_selected_threshold": 0.22500000000000003,
+  "train_cv_threshold_f1": 0.42822146006859385,
+  "train_cv_threshold_precision": 0.34194053208137715,
+  "train_cv_threshold_recall": 0.5727391874180865,
+  "selected_threshold_heldout_metrics": {
+    "test_sessions": 2466,
+    "test_purchases": 382,
+    "test_purchase_prevalence": 0.1549067315490673,
+    "threshold": 0.22500000000000003,
+    "average_precision": 0.36082583411109126,
+    "roc_auc": 0.7707828782747635,
+    "balanced_accuracy": 0.6866464511461045,
+    "precision": 0.33186490455212925,
+    "recall": 0.5916230366492147,
+    "f1": 0.42521166509877706,
+    "brier_score": 0.11485138219442624,
+    "true_negative": 1629,
+    "false_positive": 455,
+    "false_negative": 156,
+    "true_positive": 226
+  },
+  "chosen_test_ap_interval_95": [
+    0.3199467473731815,
+    0.4013606764914128
+  ],
+  "seed": 42,
+  "n_selected_features": 16,
+  "excluded_feature": "PageValues",
+  "duplicate_note": "125 rows repeat the chosen input-feature vector; identical profiles stay in one partition.",
+  "metrics": [
+    {
+      "model": "Majority-prior baseline",
+      "test_sessions": 2466,
+      "test_purchases": 382,
+      "test_purchase_prevalence": 0.1549067315490673,
+      "threshold": 0.5,
+      "average_precision": 0.1549067315490673,
+      "roc_auc": 0.5,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "brier_score": 0.13091067718045712,
+      "true_negative": 2084,
+      "false_positive": 0,
+      "false_negative": 382,
+      "true_positive": 0
+    },
+    {
+      "model": "Logistic regression",
+      "test_sessions": 2466,
+      "test_purchases": 382,
+      "test_purchase_prevalence": 0.1549067315490673,
+      "threshold": 0.5,
+      "average_precision": 0.3226157545507199,
+      "roc_auc": 0.7414343640401563,
+      "balanced_accuracy": 0.5164052215332978,
+      "precision": 0.6363636363636364,
+      "recall": 0.03664921465968586,
+      "f1": 0.06930693069306931,
+      "brier_score": 0.11855883881275636,
+      "true_negative": 2076,
+      "false_positive": 8,
+      "false_negative": 368,
+      "true_positive": 14
+    },
+    {
+      "model": "Random forest",
+      "test_sessions": 2466,
+      "test_purchases": 382,
+      "test_purchase_prevalence": 0.1549067315490673,
+      "threshold": 0.5,
+      "average_precision": 0.36082583411109126,
+      "roc_auc": 0.7707828782747635,
+      "balanced_accuracy": 0.5217501080282582,
+      "precision": 0.59375,
+      "recall": 0.049738219895287955,
+      "f1": 0.09178743961352658,
+      "brier_score": 0.11485138219442624,
+      "true_negative": 2071,
+      "false_positive": 13,
+      "false_negative": 363,
+      "true_positive": 19
+    }
+  ],
+  "tuning": [
+    {
+      "model": "Logistic regression",
+      "cv_average_precision": 0.32513083999807724,
+      "parameters": "{\"classifier__C\": 0.2, \"classifier__class_weight\": null}"
+    },
+    {
+      "model": "Random forest",
+      "cv_average_precision": 0.38889834815206425,
+      "parameters": "{\"classifier__max_depth\": null, \"classifier__min_samples_leaf\": 5}"
+    }
+  ]
+}

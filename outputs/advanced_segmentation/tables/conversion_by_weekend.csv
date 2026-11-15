@@ -1,0 +1,3 @@
+weekend_label,sessions,purchases,nonpurchase_sessions,conversion_rate_pct,wilson_95_lower_pct,wilson_95_upper_pct,sample_share_pct,small_sample_flag
+Weekday,9462,1409,8053,14.891143521454238,14.188083682875144,15.622699342559713,76.7396593673966,False
+Weekend,2868,499,2369,17.398884239888424,16.05530158684352,18.82968329780589,23.260340632603405,False
